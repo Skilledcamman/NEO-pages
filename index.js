@@ -73,7 +73,7 @@ const _ApophisGeometry = new THREE.TetrahedronGeometry(asteroid_RADIUS, 2);
 const _ApophisMaterial = new THREE.MeshStandardMaterial({
   map: new THREE.TextureLoader().load("./textures/asteroid.jpg"),
   bumpMap: new THREE.TextureLoader().load("./textures/asteroid.jpg"),
-  bumpScale: 2,
+  bumpScale: 0.015,
 });
 const _ApophisMesh = new THREE.Mesh(_ApophisGeometry, _ApophisMaterial);
 _ApophisMesh.position.set(2.5, 0, 0);
@@ -95,7 +95,7 @@ const moonGeometry = new THREE.IcosahedronGeometry(MOON_RADIUS, 12);
 const moonMaterial = new THREE.MeshStandardMaterial({
   map: new THREE.TextureLoader().load("./textures/06_moonmap4k.jpg"),
   bumpMap: new THREE.TextureLoader().load("./textures/07_moonbump4k.jpg"),
-  bumpScale: 2,
+  bumpScale: 0.01,
 });
 const moonMesh = new THREE.Mesh(moonGeometry, moonMaterial);
 moonMesh.position.set(MOON_ORBIT_RADIUS, 0, 0);
