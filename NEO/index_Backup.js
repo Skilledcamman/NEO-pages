@@ -1,9 +1,10 @@
-import * as THREE from "three";
+import * as THREE from 'three';
 import { OrbitControls } from 'jsm/controls/OrbitControls.js';
 import getStarfield from "./src/getStarfield.js";
 import { getFresnelMat } from "./src/getFresnelMat.js";
-import { STLLoader } from './src/STLLoader.js'
-import { GLTFLoader } from "https://cdn.skypack.dev/three@0.129.0/examples/jsm/loaders/GLTFLoader.js";
+import { CSS2DRenderer, CSS2DObject } from 'jsm/renderers/CSS2DRenderer.js';
+
+
 
 // Constants
 const EARTH_RADIUS = 1;
@@ -75,18 +76,46 @@ const _ApophisGeometry = new THREE.TetrahedronGeometry(asteroid_RADIUS, 2);
 const _ApophisMaterial = new THREE.MeshStandardMaterial({
   map: new THREE.TextureLoader().load("./textures/asteroid.jpg"),
   bumpMap: new THREE.TextureLoader().load("./textures/asteroid.jpg"),
-  bumpScale: 2,
+  bumpScale: 0.015,
 });
 const _ApophisMesh = new THREE.Mesh(_ApophisGeometry, _ApophisMaterial);
 _ApophisMesh.position.set(2.5, 0, 0);
 _ApophisGroup.add(_ApophisMesh)
+
+// Create the bennu mesh
+const bennuGroup = new THREE.Group();
+scene.add(bennuGroup);
+const bennuGeometry = new THREE.DodecahedronGeometry(0.072, 1);
+const bennuMaterial = new THREE.MeshStandardMaterial({
+  map: new THREE.TextureLoader().load("./textures/asteroid.jpg"),
+  bumpMap: new THREE.TextureLoader().load("./textures/asteroid.jpg"),
+  bumpScale: 0.015,
+});
+const bennuMesh = new THREE.Mesh(bennuGeometry, bennuMaterial);
+bennuMesh.position.set(19.5, 2, 0);
+bennuGroup.add(bennuMesh)
+bennuGroup.rotation.y = -180;
+
+// Create the MD_2011 mesh
+const MD_2011Group = new THREE.Group();
+scene.add(MD_2011Group);
+const MD_2011Geometry = new THREE.DodecahedronGeometry(0.03, 1);
+const MD_2011Material = new THREE.MeshStandardMaterial({
+  map: new THREE.TextureLoader().load("./textures/asteroid.jpg"),
+  bumpMap: new THREE.TextureLoader().load("./textures/asteroid.jpg"),
+  bumpScale: 0.015,
+});
+const MD_2011Mesh = new THREE.Mesh(MD_2011Geometry, MD_2011Material);
+MD_2011Mesh.position.set(-1.7, -1, 0);
+MD_2011Group.add(MD_2011Mesh)
+MD_2011Group.rotation.y = 90
 
 // Stars
 /*const stars = getStarfield({ numStars: 500 });
 scene.add(stars);*/
 
 // Sun light
-const sunLight = new THREE.DirectionalLight(0xffffff, 4.0);
+const sunLight = new THREE.DirectionalLight(0xffffff, 2.0);
 sunLight.position.set(-2, 0.5, 1.5);
 scene.add(sunLight);
 
@@ -97,11 +126,60 @@ const moonGeometry = new THREE.IcosahedronGeometry(MOON_RADIUS, 12);
 const moonMaterial = new THREE.MeshStandardMaterial({
   map: new THREE.TextureLoader().load("./textures/06_moonmap4k.jpg"),
   bumpMap: new THREE.TextureLoader().load("./textures/07_moonbump4k.jpg"),
-  bumpScale: 2,
+  bumpScale: 0.01,
 });
 const moonMesh = new THREE.Mesh(moonGeometry, moonMaterial);
 moonMesh.position.set(MOON_ORBIT_RADIUS, 0, 0);
 moonGroup.add(moonMesh);
+
+//moonlabel
+const moonlabel = new THREE.Group();
+const moontext = document.createElement('moontext')
+moontext.textContent = 'Moon';
+const moonLabel = new CSS2DObject(moontext);
+moonLabel.element.style.color = 'white';
+moonLabel.element.style.fontSize = '10px';
+moonLabel.element.style.fontFamily = 'Arial';
+scene.add(moonLabel);
+moonLabel.position.set(26, 0, 0);
+moonGroup.add(moonLabel);
+
+//apophislabel
+const _Apophislabel = new THREE.Group();
+const _ApophisText = document.createElement('_Apophistext')
+_ApophisText.textContent = 'apophis';
+const _ApophisLabel = new CSS2DObject(_ApophisText);
+_ApophisLabel.element.style.color = 'white';
+_ApophisLabel.element.style.fontSize = '10px';
+_ApophisLabel.element.style.fontFamily = 'Arial';
+scene.add(_ApophisLabel);
+_ApophisLabel.position.set(2.6, 0, 0);
+
+//bennulabel
+const bennulabel = new THREE.Group();
+const bennuText = document.createElement('bennutext')
+bennuText.textContent = 'bennu';
+const bennuLabel = new CSS2DObject(bennuText);
+bennuLabel.element.style.color = 'white';
+bennuLabel.element.style.fontSize = '10px';
+bennuLabel.element.style.fontFamily = 'Arial';
+scene.add(bennuLabel);
+bennuLabel.position.set(19.6, 2, 0);
+bennuGroup.add(bennuLabel);
+
+
+//MD_2011label
+const MD_2011label = new THREE.Group();
+const  MD_2011Text = document.createElement('MD_2011text')
+MD_2011Text.textContent = 'MD_2011';
+const MD_2011Label = new CSS2DObject(MD_2011Text);
+MD_2011Label.element.style.color = 'white';
+MD_2011Label.element.style.fontSize = '10px';
+MD_2011Label.element.style.fontFamily = 'Arial';
+scene.add(MD_2011Label);
+MD_2011Label.position.copy(MD_2011Mesh.position);
+MD_2011Group.add(MD_2011Label);
+
 
 // Orbit
 const orbitGeometry = new THREE.RingGeometry(MOON_ORBIT_RADIUS, MOON_ORBIT_RADIUS, 500);
@@ -111,16 +189,25 @@ orbit.rotation.x = Math.PI / 2;
 scene.add(orbit); 
 
 // Create a sphere to cover the Earth and Moon
-const sphereGeometry = new THREE.SphereGeometry(30, 60, 60);
+/*const sphereGeometry = new THREE.SphereGeometry(30, 60, 60);
 const sphereMaterial = new THREE.MeshBasicMaterial({
   map: new THREE.TextureLoader().load("./textures/stars.jpg"),
   side: THREE.BackSide
 });
 const sphereMesh = new THREE.Mesh(sphereGeometry, sphereMaterial);
-scene.add(sphereMesh);
+scene.add(sphereMesh);*/
+
+// Create a CSS2DRenderer instance
+const css2dRenderer = new CSS2DRenderer();
+css2dRenderer.setSize(window.innerWidth, window.innerHeight);
+css2dRenderer.domElement.style.position = 'absolute';
+css2dRenderer.domElement.style.top = '0px';
+css2dRenderer.domElement.style.pointerEvents = 'all'
+document.body.appendChild(css2dRenderer.domElement);
+
 
 // Controls
-const controls = new OrbitControls(camera, renderer.domElement);
+const controls = new OrbitControls(camera, css2dRenderer.domElement);
 controls.maxDistance = CAMERA_ZOOM_MAX;
 controls.minDistance = CAMERA_ZOOM_MIN;
 
@@ -134,8 +221,8 @@ function animate() {
   glowMesh.rotation.y += 0.002;
   //stars.rotation.y -= 0.0002;
   moonGroup.rotation.y += 0.001;
-  //_ApophisGroup.rotation.y += 0.0002;
   renderer.render(scene, camera);
+  css2dRenderer.render(scene, camera);
 }
 
 animate();
