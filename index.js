@@ -72,7 +72,7 @@ earthGroup.add(glowMesh);
 // Create the _Apophis mesh
 const _ApophisGroup = new THREE.Group();
 scene.add(_ApophisGroup);
-const _ApophisGeometry = new THREE.TetrahedronGeometry(asteroid_RADIUS, 2);
+const _ApophisGeometry = new THREE.TetrahedronGeometry(0.03, 2);
 const _ApophisMaterial = new THREE.MeshStandardMaterial({
   map: new THREE.TextureLoader().load("./textures/asteroid.jpg"),
   bumpMap: new THREE.TextureLoader().load("./textures/asteroid.jpg"),
@@ -177,6 +177,77 @@ const XF11_1997Mesh = new THREE.Mesh(XF11_1997Geometry, XF11_1997Material);
 XF11_1997Mesh.position.set(70, 0, 0);
 XF11_1997Group.add(XF11_1997Mesh)
 XF11_1997Group.rotation.y = 4.5;
+
+// Create the WN5_2001 mesh
+const WN5_2001Group = new THREE.Group();
+scene.add(WN5_2001Group);
+const WN5_2001Geometry = new THREE.DodecahedronGeometry(0.1, 1);
+const WN5_2001Material = new THREE.MeshStandardMaterial({
+  map: new THREE.TextureLoader().load("./textures/asteroid.jpg"),
+  bumpMap: new THREE.TextureLoader().load("./textures/asteroid.jpg"),
+  bumpScale: 0.015,
+});
+const WN5_2001Mesh = new THREE.Mesh(WN5_2001Geometry, WN5_2001Material);
+WN5_2001Mesh.position.set(17.8, 0, 0);
+WN5_2001Group.add(WN5_2001Mesh)
+WN5_2001Group.rotation.y = 0.5;
+
+// Create the MD5_2011 mesh
+const MD5_2011Group = new THREE.Group();
+scene.add(MD5_2011Group);
+const MD5_2011Geometry = new THREE.DodecahedronGeometry(0.12, 1);
+const MD5_2011Material = new THREE.MeshStandardMaterial({
+  map: new THREE.TextureLoader().load("./textures/asteroid.jpg"),
+  bumpMap: new THREE.TextureLoader().load("./textures/asteroid.jpg"),
+  bumpScale: 0.015,
+});
+const MD5_2011Mesh = new THREE.Mesh(MD5_2011Geometry, MD5_2011Material);
+MD5_2011Mesh.position.set(-25.5, 2, 0);
+MD5_2011Group.add(MD5_2011Mesh)
+//MD5_2011Group.rotation.y = 0.5;
+
+// Create the KJ9_1998 mesh
+const KJ9_1998Group = new THREE.Group();
+scene.add(KJ9_1998Group);
+const KJ9_1998Geometry = new THREE.DodecahedronGeometry(0.05, 1);
+const KJ9_1998Material = new THREE.MeshStandardMaterial({
+  map: new THREE.TextureLoader().load("./textures/asteroid.jpg"),
+  bumpMap: new THREE.TextureLoader().load("./textures/asteroid.jpg"),
+  bumpScale: 0.015,
+});
+const KJ9_1998Mesh = new THREE.Mesh(KJ9_1998Geometry, KJ9_1998Material);
+KJ9_1998Mesh.position.set(-16.5, 1, 0);
+KJ9_1998Group.add(KJ9_1998Mesh)
+KJ9_1998Group.rotation.y = 0.5;
+
+// Create the JE9_2002 mesh
+const JE9_2002Group = new THREE.Group();
+scene.add(JE9_2002Group);
+const JE9_2002Geometry = new THREE.DodecahedronGeometry(0.02, 1);
+const JE9_2002Material = new THREE.MeshStandardMaterial({
+  map: new THREE.TextureLoader().load("./textures/asteroid.jpg"),
+  bumpMap: new THREE.TextureLoader().load("./textures/asteroid.jpg"),
+  bumpScale: 0.015,
+});
+const JE9_2002Mesh = new THREE.Mesh(JE9_2002Geometry, JE9_2002Material);
+JE9_2002Mesh.position.set(-15.7, -1, 0);
+JE9_2002Group.add(JE9_2002Mesh)
+JE9_2002Group.rotation.y = 0.7;
+
+// Create the TY52_2012 mesh
+const TY52_2012Group = new THREE.Group();
+scene.add(TY52_2012Group);
+const TY52_2012Geometry = new THREE.DodecahedronGeometry(0.01, 1);
+const TY52_2012Material = new THREE.MeshStandardMaterial({
+  map: new THREE.TextureLoader().load("./textures/asteroid.jpg"),
+  bumpMap: new THREE.TextureLoader().load("./textures/asteroid.jpg"),
+  bumpScale: 0.015,
+});
+const TY52_2012Mesh = new THREE.Mesh(TY52_2012Geometry, TY52_2012Material);
+TY52_2012Mesh.position.set(24, -1, 0);
+TY52_2012Group.add(TY52_2012Mesh)
+TY52_2012Group.rotation.y = 1.2;
+
 
 // Stars
 /*const stars = getStarfield({ numStars: 500 });
@@ -308,6 +379,65 @@ scene.add(XF11_1997Label);
 XF11_1997Label.position.copy(XF11_1997Mesh.position);
 XF11_1997Group.add(XF11_1997Label);
 
+//WN5_2001label
+const WN5_2001label = new THREE.Group();
+const  WN5_2001Text = document.createElement('WN5_2001text')
+WN5_2001Text.textContent = 'WN5_2001';
+const WN5_2001Label = new CSS2DObject(WN5_2001Text);
+WN5_2001Label.element.style.color = 'white';
+WN5_2001Label.element.style.fontSize = '10px';
+WN5_2001Label.element.style.fontFamily = 'Arial';
+scene.add(WN5_2001Label);
+WN5_2001Label.position.copy(WN5_2001Mesh.position);
+WN5_2001Group.add(WN5_2001Label);
+
+//MD5_2011label
+const MD5_2011label = new THREE.Group();
+const  MD5_2011Text = document.createElement('MD5_2011text')
+MD5_2011Text.textContent = 'MD5_2011';
+const MD5_2011Label = new CSS2DObject(MD5_2011Text);
+MD5_2011Label.element.style.color = 'white';
+MD5_2011Label.element.style.fontSize = '10px';
+MD5_2011Label.element.style.fontFamily = 'Arial';
+scene.add(MD5_2011Label);
+MD5_2011Label.position.copy(MD5_2011Mesh.position);
+MD5_2011Group.add(MD5_2011Label);
+
+//KJ9_1998label
+const KJ9_1998label = new THREE.Group();
+const  KJ9_1998Text = document.createElement('KJ9_1998text')
+KJ9_1998Text.textContent = 'KJ9_1998';
+const KJ9_1998Label = new CSS2DObject(KJ9_1998Text);
+KJ9_1998Label.element.style.color = 'white';
+KJ9_1998Label.element.style.fontSize = '10px';
+KJ9_1998Label.element.style.fontFamily = 'Arial';
+scene.add(KJ9_1998Label);
+KJ9_1998Label.position.copy(KJ9_1998Mesh.position);
+KJ9_1998Group.add(KJ9_1998Label);
+
+//JE9_2002label
+const JE9_2002label = new THREE.Group();
+const  JE9_2002Text = document.createElement('JE9_2002text')
+JE9_2002Text.textContent = 'JE9_2002';
+const JE9_2002Label = new CSS2DObject(JE9_2002Text);
+JE9_2002Label.element.style.color = 'white';
+JE9_2002Label.element.style.fontSize = '10px';
+JE9_2002Label.element.style.fontFamily = 'Arial';
+scene.add(JE9_2002Label);
+JE9_2002Label.position.copy(JE9_2002Mesh.position);
+JE9_2002Group.add(JE9_2002Label);
+
+//TY52_2012label
+const TY52_2012label = new THREE.Group();
+const  TY52_2012Text = document.createElement('TY52_2012text')
+TY52_2012Text.textContent = 'TY52_2012';
+const TY52_2012Label = new CSS2DObject(TY52_2012Text);
+TY52_2012Label.element.style.color = 'white';
+TY52_2012Label.element.style.fontSize = '10px';
+TY52_2012Label.element.style.fontFamily = 'Arial';
+scene.add(TY52_2012Label);
+TY52_2012Label.position.copy(TY52_2012Mesh.position);
+TY52_2012Group.add(TY52_2012Label);
 
 // Orbit
 const orbitGeometry = new THREE.RingGeometry(MOON_ORBIT_RADIUS, MOON_ORBIT_RADIUS, 500);
@@ -317,13 +447,13 @@ orbit.rotation.x = Math.PI / 2;
 scene.add(orbit); 
 
 // star sphere
-/*const sphereGeometry = new THREE.SphereGeometry(30, 60, 60);
+const sphereGeometry = new THREE.SphereGeometry(200, 60, 60);
 const sphereMaterial = new THREE.MeshBasicMaterial({
   map: new THREE.TextureLoader().load("./textures/stars.jpg"),
   side: THREE.BackSide
 });
 const sphereMesh = new THREE.Mesh(sphereGeometry, sphereMaterial);
-scene.add(sphereMesh);*/
+scene.add(sphereMesh);
 
 // Create a CSS2DRenderer instance
 const css2dRenderer = new CSS2DRenderer();
