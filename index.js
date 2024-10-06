@@ -628,7 +628,7 @@ function animate() {
   cloudsMesh.rotation.y += 0.0023;
   glowMesh.rotation.y += 0.002;
   //stars.rotation.y -= 0.0002;
-  moonGroup.rotation.y += 0.001;
+  moonGroup.rotation.y += 0.0007;
   renderer.render(scene, camera);
   css2dRenderer.render(scene, camera);
 }
