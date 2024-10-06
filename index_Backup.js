@@ -102,7 +102,7 @@ const bennuMaterial = new THREE.MeshStandardMaterial({
   bumpScale: 0.015,
 });
 const bennuMesh = new THREE.Mesh(bennuGeometry, bennuMaterial);
-bennuMesh.position.set(19.5, 2, 0);
+bennuMesh.position.set(12.9, 2, 0);
 bennuGroup.add(bennuMesh)
 bennuGroup.rotation.y = -180;
 
@@ -294,7 +294,7 @@ moonLabel.position.copy(moonMesh.position);
 moonGroup.add(moonLabel);
 
 moonText.addEventListener('click', () => {
-  createPopup('moon', 'false', './gif/moon.gif');
+  createPopup('moon', '3,474.8 km', 'none', '363,300 km', 'every 28 days', './gif/moon.gif');
 });
 // Hover effect for the label
 moonText.addEventListener('mouseover', () => {
@@ -317,7 +317,7 @@ ApophisLabel.position.copy(_ApophisMesh.position);
 _ApophisGroup.add(ApophisLabel);
 
 ApophisText.addEventListener('click', () => {
-  createPopup('Apophis', './gif/apophis.gif');
+  createPopup('Apophis', '370 m', '2.7%', '31,860 km', 'April 13, 2029', './gif/apophis.gif');
 });
 // Hover effect for the label
 ApophisText.addEventListener('mouseover', () => {
@@ -340,7 +340,7 @@ bennuLabel.position.copy(bennuMesh.position);
 bennuGroup.add(bennuLabel);
 
 bennuText.addEventListener('click', () => {
-  createPopup('bennu', './gif/moon.gif');
+  createPopup('bennu', '525 m', '0.037%', '204,051 km', 'September 25, 2135', './gif/bennu.gif');
 });
 // Hover effect for the label
 bennuText.addEventListener('mouseover', () => {
@@ -363,7 +363,7 @@ MD_2011Label.position.copy(MD_2011Mesh.position);
 MD_2011Group.add(MD_2011Label);
 
 MD_2011Text.addEventListener('click', () => {
-  createPopup('2011 MD', './gif/moon.gif');
+  createPopup('2011 MD', '6.3 - 14 m', '0.01%', '12,000 km', 'June 27, 2011', './gif/2011md.gif');
 });
 // Hover effect for the label
 MD_2011Text.addEventListener('mouseover', () => {
@@ -386,7 +386,7 @@ ChelyabinskLabel.position.copy(ChelyabinskMesh.position);
 ChelyabinskGroup.add(ChelyabinskLabel);
 
 ChelyabinskText.addEventListener('click', () => {
-  createPopup('Chelyabinsk', './gif/moon.gif');
+  createPopup('Chelyabinsk', '18 m ±', '100%', 'impacted in Russia', 'February 15, 2013', './gif/chelyabinsk.gif');
 });
 // Hover effect for the label
 ChelyabinskText.addEventListener('mouseover', () => {
@@ -410,7 +410,7 @@ TC3_2008Label.position.copy(TC3_2008Mesh.position);
 TC3_2008Group.add(TC3_2008Label);
 
 TC3_2008Text.addEventListener('click', () => {
-  createPopup('2008 TC3', './gif/moon.gif');
+  createPopup('2008 TC3', '4.1 m ±', '100%', 'impacted in Sudan', 'Octomber 7, 2008', './gif/2008TC3.gif');
 });
 // Hover effect for the label
 TC3_2008Text.addEventListener('mouseover', () => {
@@ -434,7 +434,7 @@ DZ2_2023Label.position.copy(DZ2_2023Mesh.position);
 DZ2_2023Group.add(DZ2_2023Label);
 
 DZ2_2023Text.addEventListener('click', () => {
-  createPopup('2023 DZ2', './gif/moon.gif');
+  createPopup('2023 DZ2', '40 - 90 m', '0.25%', '129,737 km', 'April 18, 2004', './gif/2023DZ2.gif');
 });
 // Hover effect for the label
 DZ2_2023Text.addEventListener('mouseover', () => {
@@ -458,7 +458,7 @@ TU24_2007Label.position.copy(TU24_2007Mesh.position);
 TU24_2007Group.add(TU24_2007Label);
 
 TU24_2007Text.addEventListener('click', () => {
-  createPopup('2007 TU24', './gif/moon.gif');
+  createPopup('2007 TU24', '250 m ±', '0.001%', '554,209 km', 'January 29, 2008', './gif/2007TU24.gif');
 });
 // Hover effect for the label
 TU24_2007Text.addEventListener('mouseover', () => {
@@ -481,7 +481,7 @@ XF11_1997Label.position.copy(XF11_1997Mesh.position);
 XF11_1997Group.add(XF11_1997Label);
 
 XF11_1997Text.addEventListener('click', () => {
-  createPopup('1997 XF11', './gif/moon.gif');
+  createPopup('1997 XF11', '704 m', '0.001%', '929,253 km', 'October 28, 2028', './gif/1997xf11.gif');
 });
 // Hover effect for the label
 XF11_1997Text.addEventListener('mouseover', () => {
@@ -504,7 +504,7 @@ WN5_2001Label.position.copy(WN5_2001Mesh.position);
 WN5_2001Group.add(WN5_2001Label);
 
 WN5_2001Text.addEventListener('click', () => {
-  createPopup('2001 WN5', './gif/moon.gif');
+  createPopup('2001 WN5', '932 m', '0.002%', '248,700 km', 'June 26, 2028', './gif/2001wn5.gif');
 });
 // Hover effect for the label
 WN5_2001Text.addEventListener('mouseover', () => {
@@ -527,7 +527,7 @@ MD5_2011Label.position.copy(MD5_2011Mesh.position);
 MD5_2011Group.add(MD5_2011Label);
 
 MD5_2011Text.addEventListener('click', () => {
-  createPopup('2011 MD5', './gif/moon.gif');
+  createPopup('2011 MD5', '1200 m', '0.001%', '350,000 km', 'September 17, 1918', './gif/2011md5.gif');
 });
 // Hover effect for the label
 MD5_2011Text.addEventListener('mouseover', () => {
@@ -551,7 +551,7 @@ KJ9_1998Label.position.copy(KJ9_1998Mesh.position);
 KJ9_1998Group.add(KJ9_1998Label);
 
 KJ9_1998Text.addEventListener('click', () => {
-  createPopup('1998 KJ9', './gif/moon.gif');
+  createPopup('1998 KJ9', '500 m', '2%', '232,000 km', 'December 31, 1914', './gif/1998kj9.gif');
 });
 // Hover effect for the label
 KJ9_1998Text.addEventListener('mouseover', () => {
@@ -574,7 +574,7 @@ TY52_2012Label.position.copy(TY52_2012Mesh.position);
 TY52_2012Group.add(TY52_2012Label);
 
 TY52_2012Text.addEventListener('click', () => {
-  createPopup('2012 TY52', './gif/moon.gif');
+  createPopup('2012 TY52', '146 - 327 m', '0.001%', '314,400 km', 'November 04, 1982', './gif/2012ty52.gif');
 });
 // Hover effect for the label
 TY52_2012Text.addEventListener('mouseover', () => {
