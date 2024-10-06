@@ -3,8 +3,18 @@ import { OrbitControls } from 'jsm/controls/OrbitControls.js';
 import getStarfield from "./src/getStarfield.js";
 import { getFresnelMat } from "./src/getFresnelMat.js";
 import { CSS2DRenderer, CSS2DObject } from 'jsm/renderers/CSS2DRenderer.js';
+import createPopup from './src/createPopup.js';
 
-
+// Common function to create labels with a higher z-index
+function createLabelElement(textContent) {
+  const labelElement = document.createElement('div');
+  labelElement.textContent = textContent;
+  labelElement.style.color = 'white';
+  labelElement.style.fontSize = '10px';
+  labelElement.style.fontFamily = 'Arial';
+  labelElement.style.zIndex = '1000'; // Higher z-index to ensure the labels are on top
+  return labelElement;
+}
 
 // Constants
 const EARTH_RADIUS = 1;
@@ -92,7 +102,7 @@ const bennuMaterial = new THREE.MeshStandardMaterial({
   bumpScale: 0.015,
 });
 const bennuMesh = new THREE.Mesh(bennuGeometry, bennuMaterial);
-bennuMesh.position.set(19.5, 2, 0);
+bennuMesh.position.set(12.9, 2, 0);
 bennuGroup.add(bennuMesh)
 bennuGroup.rotation.y = -180;
 
@@ -220,19 +230,19 @@ KJ9_1998Mesh.position.set(-16.5, 1, 0);
 KJ9_1998Group.add(KJ9_1998Mesh)
 KJ9_1998Group.rotation.y = 0.5;
 
-// Create the JE9_2002 mesh
-const JE9_2002Group = new THREE.Group();
-scene.add(JE9_2002Group);
-const JE9_2002Geometry = new THREE.DodecahedronGeometry(0.02, 1);
-const JE9_2002Material = new THREE.MeshStandardMaterial({
+// Create the Apophis mesh
+const ApophisGroup = new THREE.Group();
+scene.add(ApophisGroup);
+const ApophisGeometry = new THREE.DodecahedronGeometry(0.02, 1);
+const ApophisMaterial = new THREE.MeshStandardMaterial({
   map: new THREE.TextureLoader().load("./textures/asteroid.jpg"),
   bumpMap: new THREE.TextureLoader().load("./textures/asteroid.jpg"),
   bumpScale: 0.015,
 });
-const JE9_2002Mesh = new THREE.Mesh(JE9_2002Geometry, JE9_2002Material);
-JE9_2002Mesh.position.set(-15.7, -1, 0);
-JE9_2002Group.add(JE9_2002Mesh)
-JE9_2002Group.rotation.y = 0.7;
+const ApophisMesh = new THREE.Mesh(ApophisGeometry, ApophisMaterial);
+ApophisMesh.position.set(-15.7, -1, 0);
+ApophisGroup.add(ApophisMesh)
+ApophisGroup.rotation.y = 0.7;
 
 // Create the TY52_2012 mesh
 const TY52_2012Group = new THREE.Group();
@@ -271,46 +281,79 @@ const moonMesh = new THREE.Mesh(moonGeometry, moonMaterial);
 moonMesh.position.set(MOON_ORBIT_RADIUS, 0, 0);
 moonGroup.add(moonMesh);
 
-//moonlabel
-const moonlabel = new THREE.Group();
-const moontext = document.createElement('moontext')
-moontext.textContent = 'Moon';
-const moonLabel = new CSS2DObject(moontext);
+//moonlabel 
+const  moonText = document.createElement('div')
+moonText.style.cursor = 'pointer';
+moonText.textContent = 'moon';
+const moonLabel = new CSS2DObject(moonText);
 moonLabel.element.style.color = 'white';
 moonLabel.element.style.fontSize = '10px';
 moonLabel.element.style.fontFamily = 'Arial';
 scene.add(moonLabel);
-moonLabel.position.set(26, 0, 0);
+moonLabel.position.copy(moonMesh.position);
 moonGroup.add(moonLabel);
 
-//apophislabel
-const _Apophislabel = new THREE.Group();
-const _ApophisText = document.createElement('_Apophistext')
-_ApophisText.textContent = 'apophis';
-const _ApophisLabel = new CSS2DObject(_ApophisText);
-_ApophisLabel.element.style.color = 'white';
-_ApophisLabel.element.style.fontSize = '10px';
-_ApophisLabel.element.style.fontFamily = 'Arial';
-scene.add(_ApophisLabel);
-_ApophisLabel.position.set(2.6, 0, 0);
+moonText.addEventListener('click', () => {
+  createPopup('moon', 'none', '363,300 km', 'every 28 days', './gif/moon.gif');
+});
+// Hover effect for the label
+moonText.addEventListener('mouseover', () => {
+  moonText.style.color = 'grey';
+});
+moonText.addEventListener('mouseout', () => {
+  moonText.style.color = 'white';
+});
+
+//Apophislabel 
+const  ApophisText = document.createElement('div')
+ApophisText.style.cursor = 'pointer';
+ApophisText.textContent = 'Apophis';
+const ApophisLabel = new CSS2DObject(ApophisText);
+ApophisLabel.element.style.color = 'white';
+ApophisLabel.element.style.fontSize = '10px';
+ApophisLabel.element.style.fontFamily = 'Arial';
+scene.add(ApophisLabel);
+ApophisLabel.position.copy(_ApophisMesh.position);
+_ApophisGroup.add(ApophisLabel);
+
+ApophisText.addEventListener('click', () => {
+  createPopup('Apophis', '2.7%', '31,860 km', 'April 13, 2029', './gif/apophis.gif');
+});
+// Hover effect for the label
+ApophisText.addEventListener('mouseover', () => {
+  ApophisText.style.color = 'grey';
+});
+ApophisText.addEventListener('mouseout', () => {
+  ApophisText.style.color = 'white';
+});
 
 //bennulabel
-const bennulabel = new THREE.Group();
-const bennuText = document.createElement('bennutext')
+const  bennuText = document.createElement('div')
+bennuText.style.cursor = 'pointer';
 bennuText.textContent = 'bennu';
 const bennuLabel = new CSS2DObject(bennuText);
 bennuLabel.element.style.color = 'white';
 bennuLabel.element.style.fontSize = '10px';
 bennuLabel.element.style.fontFamily = 'Arial';
 scene.add(bennuLabel);
-bennuLabel.position.set(19.6, 2, 0);
+bennuLabel.position.copy(bennuMesh.position);
 bennuGroup.add(bennuLabel);
 
+bennuText.addEventListener('click', () => {
+  createPopup('bennu', '0.037%', '204,051 km', 'September 25, 2135', './gif/bennu.gif');
+});
+// Hover effect for the label
+bennuText.addEventListener('mouseover', () => {
+  bennuText.style.color = 'grey';
+});
+bennuText.addEventListener('mouseout', () => {
+  bennuText.style.color = 'white';
+});
 
 //MD_2011label
-const MD_2011label = new THREE.Group();
-const  MD_2011Text = document.createElement('MD_2011text')
-MD_2011Text.textContent = 'MD_2011';
+const  MD_2011Text = document.createElement('div')
+MD_2011Text.style.cursor = 'pointer';
+MD_2011Text.textContent = '2011 MD';
 const MD_2011Label = new CSS2DObject(MD_2011Text);
 MD_2011Label.element.style.color = 'white';
 MD_2011Label.element.style.fontSize = '10px';
@@ -319,9 +362,20 @@ scene.add(MD_2011Label);
 MD_2011Label.position.copy(MD_2011Mesh.position);
 MD_2011Group.add(MD_2011Label);
 
-//Chelyabinsklabel
-const Chelyabinsklabel = new THREE.Group();
-const  ChelyabinskText = document.createElement('Chelyabinsktext')
+MD_2011Text.addEventListener('click', () => {
+  createPopup('2011 MD', '0.01%', '12,000 km', 'June 27, 2011', './gif/2011md.gif');
+});
+// Hover effect for the label
+MD_2011Text.addEventListener('mouseover', () => {
+  MD_2011Text.style.color = 'grey';
+});
+MD_2011Text.addEventListener('mouseout', () => {
+  MD_2011Text.style.color = 'white';
+});
+
+//Chelyabinsklabel  
+const  ChelyabinskText = document.createElement('div')
+ChelyabinskText.style.cursor = 'pointer';
 ChelyabinskText.textContent = 'Chelyabinsk';
 const ChelyabinskLabel = new CSS2DObject(ChelyabinskText);
 ChelyabinskLabel.element.style.color = 'white';
@@ -331,10 +385,22 @@ scene.add(ChelyabinskLabel);
 ChelyabinskLabel.position.copy(ChelyabinskMesh.position);
 ChelyabinskGroup.add(ChelyabinskLabel);
 
+ChelyabinskText.addEventListener('click', () => {
+  createPopup('Chelyabinsk', '100%', 'impacted in Russia', 'February 15, 2013', './gif/chelyabinsk.gif');
+});
+// Hover effect for the label
+ChelyabinskText.addEventListener('mouseover', () => {
+  ChelyabinskText.style.color = 'grey';
+});
+ChelyabinskText.addEventListener('mouseout', () => {
+  ChelyabinskText.style.color = 'white';
+});
+
+
 //TC3_2008label
-const TC3_2008label = new THREE.Group();
-const  TC3_2008Text = document.createElement('TC3_2008text')
-TC3_2008Text.textContent = 'TC3_2008';
+const  TC3_2008Text = document.createElement('div')
+TC3_2008Text.style.cursor = 'pointer';
+TC3_2008Text.textContent = '2008 TC3';
 const TC3_2008Label = new CSS2DObject(TC3_2008Text);
 TC3_2008Label.element.style.color = 'white';
 TC3_2008Label.element.style.fontSize = '10px';
@@ -343,10 +409,22 @@ scene.add(TC3_2008Label);
 TC3_2008Label.position.copy(TC3_2008Mesh.position);
 TC3_2008Group.add(TC3_2008Label);
 
+TC3_2008Text.addEventListener('click', () => {
+  createPopup('2008 TC3', '100%', 'impacted in Sudan', 'Octomber 7, 2008', './gif/2008TC3.gif');
+});
+// Hover effect for the label
+TC3_2008Text.addEventListener('mouseover', () => {
+  TC3_2008Text.style.color = 'grey';
+});
+TC3_2008Text.addEventListener('mouseout', () => {
+  TC3_2008Text.style.color = 'white';
+});
+
+
 //DZ2_2023label
-const DZ2_2023label = new THREE.Group();
-const  DZ2_2023Text = document.createElement('DZ2_2023text')
-DZ2_2023Text.textContent = 'DZ2_2023';
+const  DZ2_2023Text = document.createElement('div')
+DZ2_2023Text.style.cursor = 'pointer';
+DZ2_2023Text.textContent = '2023 DZ2';
 const DZ2_2023Label = new CSS2DObject(DZ2_2023Text);
 DZ2_2023Label.element.style.color = 'white';
 DZ2_2023Label.element.style.fontSize = '10px';
@@ -355,10 +433,22 @@ scene.add(DZ2_2023Label);
 DZ2_2023Label.position.copy(DZ2_2023Mesh.position);
 DZ2_2023Group.add(DZ2_2023Label);
 
+DZ2_2023Text.addEventListener('click', () => {
+  createPopup('2023 DZ2', '0.25%', '129,737 km', 'April 18, 2004', './gif/2023DZ2.gif');
+});
+// Hover effect for the label
+DZ2_2023Text.addEventListener('mouseover', () => {
+  DZ2_2023Text.style.color = 'grey';
+});
+DZ2_2023Text.addEventListener('mouseout', () => {
+  DZ2_2023Text.style.color = 'white';
+});
+
+
 //TU24_2007label
-const TU24_2007label = new THREE.Group();
-const  TU24_2007Text = document.createElement('TU24_2007text')
-TU24_2007Text.textContent = 'TU24_2007';
+const  TU24_2007Text = document.createElement('div')
+TU24_2007Text.style.cursor = 'pointer';
+TU24_2007Text.textContent = '2007 TU24';
 const TU24_2007Label = new CSS2DObject(TU24_2007Text);
 TU24_2007Label.element.style.color = 'white';
 TU24_2007Label.element.style.fontSize = '10px';
@@ -367,10 +457,21 @@ scene.add(TU24_2007Label);
 TU24_2007Label.position.copy(TU24_2007Mesh.position);
 TU24_2007Group.add(TU24_2007Label);
 
+TU24_2007Text.addEventListener('click', () => {
+  createPopup('2007 TU24', '0.001%', '554,209 km', 'January 29, 2008', './gif/2007TU24.gif');
+});
+// Hover effect for the label
+TU24_2007Text.addEventListener('mouseover', () => {
+  TU24_2007Text.style.color = 'grey';
+});
+TU24_2007Text.addEventListener('mouseout', () => {
+  TU24_2007Text.style.color = 'white';
+});
+
 //XF11_1997label
-const XF11_1997label = new THREE.Group();
-const  XF11_1997Text = document.createElement('XF11_1997text')
-XF11_1997Text.textContent = 'XF11_1997';
+const  XF11_1997Text = document.createElement('div')
+XF11_1997Text.style.cursor = 'pointer';
+XF11_1997Text.textContent = '1997 XF11';
 const XF11_1997Label = new CSS2DObject(XF11_1997Text);
 XF11_1997Label.element.style.color = 'white';
 XF11_1997Label.element.style.fontSize = '10px';
@@ -379,10 +480,21 @@ scene.add(XF11_1997Label);
 XF11_1997Label.position.copy(XF11_1997Mesh.position);
 XF11_1997Group.add(XF11_1997Label);
 
+XF11_1997Text.addEventListener('click', () => {
+  createPopup('1997 XF11', '0.001%', '929,253 km', 'October 28, 2028', './gif/1997xf11.gif');
+});
+// Hover effect for the label
+XF11_1997Text.addEventListener('mouseover', () => {
+  XF11_1997Text.style.color = 'grey';
+});
+XF11_1997Text.addEventListener('mouseout', () => {
+  XF11_1997Text.style.color = 'white';
+});
+
 //WN5_2001label
-const WN5_2001label = new THREE.Group();
-const  WN5_2001Text = document.createElement('WN5_2001text')
-WN5_2001Text.textContent = 'WN5_2001';
+const  WN5_2001Text = document.createElement('div')
+WN5_2001Text.style.cursor = 'pointer';
+WN5_2001Text.textContent = '2001 WN5';
 const WN5_2001Label = new CSS2DObject(WN5_2001Text);
 WN5_2001Label.element.style.color = 'white';
 WN5_2001Label.element.style.fontSize = '10px';
@@ -391,10 +503,21 @@ scene.add(WN5_2001Label);
 WN5_2001Label.position.copy(WN5_2001Mesh.position);
 WN5_2001Group.add(WN5_2001Label);
 
+WN5_2001Text.addEventListener('click', () => {
+  createPopup('2001 WN5', '0.002%', '248,700 km', 'June 26, 2028', './gif/2001wn5.gif');
+});
+// Hover effect for the label
+WN5_2001Text.addEventListener('mouseover', () => {
+  WN5_2001Text.style.color = 'grey';
+});
+WN5_2001Text.addEventListener('mouseout', () => {
+  WN5_2001Text.style.color = 'white';
+});
+
 //MD5_2011label
-const MD5_2011label = new THREE.Group();
-const  MD5_2011Text = document.createElement('MD5_2011text')
-MD5_2011Text.textContent = 'MD5_2011';
+const  MD5_2011Text = document.createElement('div')
+MD5_2011Text.style.cursor = 'pointer';
+MD5_2011Text.textContent = '2011 MD5';
 const MD5_2011Label = new CSS2DObject(MD5_2011Text);
 MD5_2011Label.element.style.color = 'white';
 MD5_2011Label.element.style.fontSize = '10px';
@@ -403,10 +526,22 @@ scene.add(MD5_2011Label);
 MD5_2011Label.position.copy(MD5_2011Mesh.position);
 MD5_2011Group.add(MD5_2011Label);
 
+MD5_2011Text.addEventListener('click', () => {
+  createPopup('2011 MD5', '0.001%', '350,000 km', 'September 17, 1918', './gif/2011md5.gif');
+});
+// Hover effect for the label
+MD5_2011Text.addEventListener('mouseover', () => {
+  MD5_2011Text.style.color = 'grey';
+});
+MD5_2011Text.addEventListener('mouseout', () => {
+  MD5_2011Text.style.color = 'white';
+});
+
+
 //KJ9_1998label
-const KJ9_1998label = new THREE.Group();
-const  KJ9_1998Text = document.createElement('KJ9_1998text')
-KJ9_1998Text.textContent = 'KJ9_1998';
+const  KJ9_1998Text = document.createElement('div')
+KJ9_1998Text.style.cursor = 'pointer';
+KJ9_1998Text.textContent = '1998 KJ9';
 const KJ9_1998Label = new CSS2DObject(KJ9_1998Text);
 KJ9_1998Label.element.style.color = 'white';
 KJ9_1998Label.element.style.fontSize = '10px';
@@ -415,22 +550,21 @@ scene.add(KJ9_1998Label);
 KJ9_1998Label.position.copy(KJ9_1998Mesh.position);
 KJ9_1998Group.add(KJ9_1998Label);
 
-//JE9_2002label
-const JE9_2002label = new THREE.Group();
-const  JE9_2002Text = document.createElement('JE9_2002text')
-JE9_2002Text.textContent = 'JE9_2002';
-const JE9_2002Label = new CSS2DObject(JE9_2002Text);
-JE9_2002Label.element.style.color = 'white';
-JE9_2002Label.element.style.fontSize = '10px';
-JE9_2002Label.element.style.fontFamily = 'Arial';
-scene.add(JE9_2002Label);
-JE9_2002Label.position.copy(JE9_2002Mesh.position);
-JE9_2002Group.add(JE9_2002Label);
+KJ9_1998Text.addEventListener('click', () => {
+  createPopup('1998 KJ9', '2%', '232,000 km', 'December 31, 1914', './gif/1998kj9.gif');
+});
+// Hover effect for the label
+KJ9_1998Text.addEventListener('mouseover', () => {
+  KJ9_1998Text.style.color = 'grey';
+});
+KJ9_1998Text.addEventListener('mouseout', () => {
+  KJ9_1998Text.style.color = 'white';
+});
 
 //TY52_2012label
-const TY52_2012label = new THREE.Group();
-const  TY52_2012Text = document.createElement('TY52_2012text')
-TY52_2012Text.textContent = 'TY52_2012';
+const  TY52_2012Text = document.createElement('div')
+TY52_2012Text.style.cursor = 'pointer';
+TY52_2012Text.textContent = '2012 TY52';
 const TY52_2012Label = new CSS2DObject(TY52_2012Text);
 TY52_2012Label.element.style.color = 'white';
 TY52_2012Label.element.style.fontSize = '10px';
@@ -439,12 +573,28 @@ scene.add(TY52_2012Label);
 TY52_2012Label.position.copy(TY52_2012Mesh.position);
 TY52_2012Group.add(TY52_2012Label);
 
+TY52_2012Text.addEventListener('click', () => {
+  createPopup('2012 TY52', '0.001%', '314,400 km', 'November 04, 1982', './gif/2012ty52.gif');
+});
+// Hover effect for the label
+TY52_2012Text.addEventListener('mouseover', () => {
+  TY52_2012Text.style.color = 'grey';
+});
+TY52_2012Text.addEventListener('mouseout', () => {
+  TY52_2012Text.style.color = 'white';
+});
+
+
+
+
+
 // Orbit
 const orbitGeometry = new THREE.RingGeometry(MOON_ORBIT_RADIUS, MOON_ORBIT_RADIUS, 500);
 const orbitMaterial = new THREE.LineBasicMaterial({ color: 0xffffff });
 const orbit = new THREE.Line(orbitGeometry, orbitMaterial);
 orbit.rotation.x = Math.PI / 2;
 scene.add(orbit); 
+
 
 // star sphere
 const sphereGeometry = new THREE.SphereGeometry(200, 60, 60);
@@ -460,7 +610,7 @@ const css2dRenderer = new CSS2DRenderer();
 css2dRenderer.setSize(window.innerWidth, window.innerHeight);
 css2dRenderer.domElement.style.position = 'absolute';
 css2dRenderer.domElement.style.top = '0px';
-css2dRenderer.domElement.style.pointerEvents = 'all'
+css2dRenderer.domElement.style.pointerEvents = 'auto'
 document.body.appendChild(css2dRenderer.domElement);
 
 
@@ -491,61 +641,8 @@ function handleWindowResize() {
   camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
 }
-window.addEventListener('resize', handleWindowResize, false);
-
-// Add click event handler
-document.addEventListener('click', (event) => {
-  const raycaster = new THREE.Raycaster();
-  const mouse = new THREE.Vector2();
-  mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-  mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-  raycaster.setFromCamera(mouse, camera);
-  const intersects = raycaster.intersectObject(moonMesh);
-  if (intersects.length > 0) {
-    // Create a popup with the text "Moon" and a GIF
-    const popup = document.createElement('div');
-    popup.textContent = 'Moon';
-    popup.style.position = 'absolute';
-    popup.style.top = '50%';
-    popup.style.left = '50%';
-    popup.style.width = '300px';
-    popup.style.height = '200px';
-    popup.style.transform = 'translate(-50%, -50%)';
-    popup.style.backgroundColor = 'rgba(128, 128, 128, 0.5)';
-    popup.style.padding = '20px';
-    popup.style.borderRadius = '10px';
-    popup.style.boxShadow = '0 0 10px rgba(0, 0, 0, 0.5)';
-    document.body.appendChild(popup);
-
-// Add a GIF to the popup
-const gif = document.createElement('img');
-gif.src = './gif/moon.gif'; // 
-gif.style.height = '100%';
-//gif.style.width = '50%';
-gif.style.objectFit = 'cover';
-gif.style.display = 'flex';
-gif.style.justifyContent = 'center';
-gif.style.alignItems = 'center';
-gif.style.margin = 'auto';
-popup.appendChild(gif);
-
-    // Add a close button
-    const closeButton = document.createElement('button');
-    closeButton.textContent = 'x';
-    closeButton.style.position = 'absolute';
-    closeButton.style.top = '10px';
-    closeButton.style.width = '20px';
-    closeButton.style.height = '16px';
-    closeButton.style.right = '10px';
-    closeButton.style.fontSize = '12px';
-    closeButton.style.display = 'flex';
-    closeButton.style.justifyContent = 'center';
-    closeButton.style.alignItems = 'center';
-    closeButton.style.lineHeight = '10px';
-    closeButton.style.cursor = 'pointer';
-    closeButton.onclick = () => {
-      document.body.removeChild(popup);
-    };
-    popup.appendChild(closeButton);
-  }
+window.addEventListener('resize', () => {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
 });
