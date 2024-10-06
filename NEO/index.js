@@ -1,6 +1,5 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'jsm/controls/OrbitControls.js';
-import getStarfield from "./src/getStarfield.js";
 import { getFresnelMat } from "./src/getFresnelMat.js";
 import { CSS2DRenderer, CSS2DObject } from 'jsm/renderers/CSS2DRenderer.js';
 import createPopup from './src/createPopup.js';
