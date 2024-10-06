@@ -3,29 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Redirect to Second Page</title>
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f0f0f0;
-        }
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            border: none;
-            border-radius: 5px;
-            background-color: #007bff;
-            color: white;
-        }
-    </style>
+    <meta name="description" content="Portfolio showcasing projects related to Near Earth Objects using the three.js library in JavaScript.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <title>Portfolio Website</title>
 </head>
 <body>
+    <header>
+        <a href="index.html" class="logo">NEO.js</a>
+        <nav>
+            <a href="#" class="active">Home</a>
+            <a href="exp.html">Experience</a>
+            <a href="social.html">Social</a>
+        </nav>
+    </header>
+    <section class="home">
+        <div class="home-img">
+            <img src="main.png" alt="A visual representation of Near Earth Objects">
+        </div>
+        <div class="home-content">
+            <h1>Hey, It's <span>Ahmed</span></h1>
+            <h3 class="typing-text">Project contains <span></span></h3>
+            <p>This is a project based on the three.js library in JavaScript,</p>
+            <p>It depicts near-Earth objects (NEOs) with their impact probability,</p>
+            <p>Size, closest approach, etc.</p>
+            <p>It aims to educate users on potential hazardous objects (PHOs) in the near Earth.</p>
+            <br>
+            <div class="social-icons">
+            </div>
+            <a href="video.html" class="btn">Demo</a>
+        </div>
+    </section>
 
-    <button onclick="window.location.href='index2.html'">Go to Second Page</button>
-
+    <!-- Floating Button -->
+    <a href="index2.html" class="floating-btn">
+        <i class="fas fa-arrow-down"></i>
+    </a>
 </body>
 </html>
