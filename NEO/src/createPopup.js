@@ -1,12 +1,12 @@
-function createPopup(popupText, PHO, closestapproach, approachdate, gifPath) {
+function createPopup(popupText, diameter, PHO, closestapproach, approachdate, gifPath) {
   // Create the popup element
   const popup = document.createElement('div');
   popup.style.position = 'absolute';
   popup.style.zIndex = '2000';
   popup.style.top = '50%';
-  popup.style.left = '50%';
+  popup.style.left = '10%';
   popup.style.width = '300px';
-  popup.style.height = '200px';
+  popup.style.height = '300px';
   popup.style.transform = 'translate(-50%, -50%)';
   popup.style.backgroundColor = 'rgba(15, 15, 17, 0.9)';
   popup.style.padding = '20px';
@@ -37,11 +37,12 @@ function createPopup(popupText, PHO, closestapproach, approachdate, gifPath) {
 
     // Add PHO text
     const PHOElement = document.createElement('p');
-    PHOElement.innerHTML = 'chance of impact : ' + PHO + '<br>Closest approach : ' +closestapproach + '<br>Approach Date : ' +approachdate;
+    PHOElement.innerHTML = 'diameter : ' + diameter + '<br>chance of impact : ' + PHO + '<br>Closest approach : ' +closestapproach + '<br>Approach Date : ' +approachdate;
     PHOElement.style.marginBottom = '10px';
     PHOElement.style.color = 'white';
     PHOElement.style.fontSize = '18px';
     PHOElement.style.marginTop = '0';
+    PHOElement.style.font = 'Arial';
     popup.appendChild(PHOElement);
 
   // Add the close button to the popup
